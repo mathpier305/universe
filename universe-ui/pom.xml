@@ -17,5 +17,10 @@
   		<artifactId>vaadin-spring</artifactId>
   		<version>1.0.0</version>
   	</dependency>
+  	<dependency>
+  		<groupId>com.matt</groupId>
+  		<artifactId>universe-util</artifactId>
+  		<version>0.0.1-SNAPSHOT</version>
+  	</dependency>
   </dependencies>
 </project>

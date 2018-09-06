@@ -1,5 +1,6 @@
 package com.matt.ui.commonns;
 
+import com.matt.utils.StringUtils;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Tree;
 import com.vaadin.ui.VerticalLayout;
@@ -20,22 +21,22 @@ public class UniversMenuFactory implements UIComponentBuilder {
 			setWidth("100%");
 			setHeightUndefined();
 			
-			mainMenu.addItem("STUDENT");
-			mainMenu.addItem("UNIVERSITY");
+			mainMenu.addItem(StringUtils.MENU_STUDENT.getString());
+			mainMenu.addItem(StringUtils.MENU_UNIVERSITY.getString());
 			
-			mainMenu.expandItem("STUDENT");
-			mainMenu.expandItem("UNIVERSITY");
+			mainMenu.expandItem(StringUtils.MENU_STUDENT.getString());
+			mainMenu.expandItem(StringUtils.MENU_UNIVERSITY.getString());
 			
-			mainMenu.addItem("Add Student");
-			mainMenu.addItem("Remove Student");
-			mainMenu.setChildrenAllowed("Add Student", false);
-			mainMenu.setChildrenAllowed("Remove Student", false);
-			mainMenu.setParent("Add Student",  "STUDENT");
-			mainMenu.setParent("Remove Student", "STUDENT");
+			mainMenu.addItem(StringUtils.MENU_ADD_STUDENT.getString());
+			mainMenu.addItem(StringUtils.MENU_REMOVE_STUDENT.getString());
+			mainMenu.setChildrenAllowed(StringUtils.MENU_ADD_STUDENT.getString(), false);
+			mainMenu.setChildrenAllowed(StringUtils.MENU_REMOVE_STUDENT.getString(), false);
+			mainMenu.setParent(StringUtils.MENU_ADD_STUDENT.getString(),  StringUtils.MENU_STUDENT.getString());
+			mainMenu.setParent(StringUtils.MENU_REMOVE_STUDENT.getString(), StringUtils.MENU_STUDENT.getString());
 			
-			mainMenu.addItem("Operations");
-			mainMenu.setChildrenAllowed("Operations", false);
-			mainMenu.setParent("Operations", "UNIVERSITY");
+			mainMenu.addItem(StringUtils.MENU_CREATIONS.getString());
+			mainMenu.setChildrenAllowed(StringUtils.MENU_CREATIONS.getString(), false);
+			mainMenu.setParent(StringUtils.MENU_CREATIONS.getString(), StringUtils.MENU_UNIVERSITY.getString());
 			
 			addComponent(mainMenu);
 			return this;
