@@ -10,6 +10,9 @@
         <dependent-module archiveName="universe-util-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/universe-util/universe-util">
             <dependency-type>uses</dependency-type>
         </dependent-module>
+        <dependent-module archiveName="universe-model-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/universe-model/universe-model">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
         <property name="context-root" value="universe-web"/>
         <property name="java-output-path" value="/universe-web/target/classes"/>
     </wb-module>

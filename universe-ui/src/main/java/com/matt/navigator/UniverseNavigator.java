@@ -22,7 +22,7 @@ public class UniverseNavigator extends Navigator {
 		try {
 			UniverseNavigator.getNavigator().navigateTo(path);
 		}catch(Exception e) {
-			e.printStackTrace();
+			return;
 		}
 	}
 	

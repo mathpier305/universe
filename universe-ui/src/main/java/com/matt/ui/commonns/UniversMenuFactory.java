@@ -1,6 +1,9 @@
 package com.matt.ui.commonns;
 
+import com.matt.navigator.UniverseNavigator;
 import com.matt.utils.StringUtils;
+import com.vaadin.data.Property;
+import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Tree;
 import com.vaadin.ui.VerticalLayout;
@@ -8,12 +11,13 @@ import com.vaadin.ui.VerticalLayout;
 @org.springframework.stereotype.Component
 public class UniversMenuFactory implements UIComponentBuilder {
 	
-	private class UniversMenu extends VerticalLayout {
+	private class UniversMenu extends VerticalLayout implements  Property.ValueChangeListener {
 		
 		private Tree mainMenu;
 		
 		public UniversMenu init() {
 			mainMenu = new Tree();
+			mainMenu.addValueChangeListener(this);
 			return this;
 		}
 		
@@ -40,6 +44,16 @@ public class UniversMenuFactory implements UIComponentBuilder {
 			
 			addComponent(mainMenu);
 			return this;
+		}
+
+		public void valueChange(ValueChangeEvent event) {
+			String selectedItemPath = (String)event.getProperty().getValue();
+			if(selectedItemPath == null) {
+				return ;
+			}
+			
+			String path = selectedItemPath.toLowerCase().replaceAll("\\s+", "");
+			UniverseNavigator.navigate(path);
 		}
 		
 	}
