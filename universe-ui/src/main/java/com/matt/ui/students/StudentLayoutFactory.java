@@ -28,7 +28,7 @@ public class StudentLayoutFactory extends VerticalLayout implements View {
 		tabSheet = new TabSheet();
 		tabSheet.setWidth("100%");
 		
-		Component addStudentMainTab = new Label("First Tab Content");
+		Component addStudentMainTab = mainLayoutFactory.createComponent();
 		
 		Component showStudentTAb = new Label("Show Student tab...");
 		
