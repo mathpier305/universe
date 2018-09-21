@@ -1,7 +1,10 @@
 package com.matt.ui.students;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import com.google.gwt.i18n.server.testing.Gender;
 import com.matt.model.entity.Student;
+import com.matt.service.addstudent.AddStudentService;
 import com.matt.utils.NotificationMessages;
 import com.matt.utils.StudentStringUitls;
 import com.vaadin.data.fieldgroup.BeanFieldGroup;
@@ -106,7 +109,12 @@ public class AddStudentMainLayoutFactory {
 						Type.ERROR_MESSAGE);
 				 return;
 			}
+			addStudentService.saveStudent(student);
 			clearField();
+			
+			Notification.show(NotificationMessages.STUDENT_SAVE_SUCCESS_TITLE.getString(),
+					NotificationMessages.STUDENT_SAVE_SUCCESS_DESCRIPTION.getString(),
+					Type.WARNING_MESSAGE);
 		}
 		
 		
@@ -117,6 +125,9 @@ public class AddStudentMainLayoutFactory {
 			age.setValue(null);
 		}
 	}
+	
+	@Autowired
+	private AddStudentService addStudentService;
 	
 	public Component createComponent() {
 		return new AddStudentMainLayout().init().bind().layout();

@@ -6,4 +6,16 @@
     <version>0.0.1-SNAPSHOT</version>
   </parent>
   <artifactId>universe-service</artifactId>
+  <dependencies>
+  	<dependency>
+  		<groupId>com.matt</groupId>
+  		<artifactId>universe-model</artifactId>
+  		<version>0.0.1-SNAPSHOT</version>
+  	</dependency>
+  	<dependency>
+  		<groupId>com.matt</groupId>
+  		<artifactId>universe-repository</artifactId>
+  		<version>0.0.1-SNAPSHOT</version>
+  	</dependency>
+  </dependencies>
 </project>
