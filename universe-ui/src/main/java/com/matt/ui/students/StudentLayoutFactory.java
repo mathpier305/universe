@@ -20,6 +20,9 @@ public class StudentLayoutFactory extends VerticalLayout implements View {
 	@Autowired
 	private AddStudentMainLayoutFactory mainLayoutFactory;
 	
+	@Autowired
+	private ShowAllStudentsLayoutFactory showStudentsLayoutFactory;
+	
 	private TabSheet tabSheet;
 	
 	
@@ -30,7 +33,7 @@ public class StudentLayoutFactory extends VerticalLayout implements View {
 		
 		Component addStudentMainTab = mainLayoutFactory.createComponent();
 		
-		Component showStudentTAb = new Label("Show Student tab...");
+		Component showStudentTAb = showStudentsLayoutFactory.createComponent();
 		
 		tabSheet.addTab(addStudentMainTab, StudentStringUitls.MAIN_MENU.getString());
 		tabSheet.addTab(showStudentTAb, StudentStringUitls.SHOW_ALL_STUDENTS.getString());
