@@ -13,7 +13,7 @@ import com.vaadin.ui.TabSheet;
 import com.vaadin.ui.VerticalLayout;
 
 @SpringView(name=StudentLayoutFactory.NAME, ui=UniversMainUI.class)
-public class StudentLayoutFactory extends VerticalLayout implements View {
+public class StudentLayoutFactory extends VerticalLayout implements View, StudentSavedListener {
 	
 	public static final String NAME ="addstudent";
 	
@@ -31,7 +31,7 @@ public class StudentLayoutFactory extends VerticalLayout implements View {
 		tabSheet = new TabSheet();
 		tabSheet.setWidth("100%");
 		
-		Component addStudentMainTab = mainLayoutFactory.createComponent();
+		Component addStudentMainTab = mainLayoutFactory.createComponent(this);
 		
 		Component showStudentTAb = showStudentsLayoutFactory.createComponent();
 		
@@ -45,6 +45,10 @@ public class StudentLayoutFactory extends VerticalLayout implements View {
 	public void enter(ViewChangeEvent event) {
 		removeAllComponents();
 		addLayout();
+	}
+
+	public void studentSaved() {
+		showStudentsLayoutFactory.refreshTable();
 	}
 
 }

@@ -18,6 +18,12 @@ public class ShowAllStudentsLayoutFactory implements UIComponentBuilder{
 	private List<Student> students;
 	private BeanItemContainer<Student> container;
 	
+	public void refreshTable() {
+		students = showAllStudentsService.getAllStudents();
+		container.removeAllItems();
+		container.addAll(students);
+	}
+	
 	
 	private class ShowAllStudentsLayout extends VerticalLayout {
 		private Grid studentsTable;
