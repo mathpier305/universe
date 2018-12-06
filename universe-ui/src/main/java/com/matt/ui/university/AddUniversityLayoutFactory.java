@@ -1,13 +1,17 @@
 package com.matt.ui.university;
 
 import com.matt.model.entity.University;
+import com.matt.utils.NotificationMessages;
 import com.matt.utils.StudentStringUitls;
 import com.matt.utils.UniversityStringUtils;
 import com.vaadin.data.fieldgroup.BeanFieldGroup;
+import com.vaadin.data.fieldgroup.FieldGroup.CommitException;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.GridLayout;
+import com.vaadin.ui.Notification;
+import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.ValoTheme;
@@ -65,8 +69,25 @@ public class AddUniversityLayoutFactory {
 		
 
 		public void buttonClick(ClickEvent event) {
-			
+			try {
+				fieldGroup.commit();
+			} catch (CommitException exception) {
+				Notification.show(NotificationMessages.UNIVERSITY_SAVED_VALIDATION_ERROR_TITLE.getString(), 
+						NotificationMessages.UNIVERSITY_SAVED_VALIDATION_ERROR_DESCRIPTION.getString(), Type.ERROR_MESSAGE );
+				return;
+			}
+			clearFields();
+			addUniversityService.addUniversity(university);
+			Notification.show("SAVE", "university saved successfully", Type.WARNING_MESSAGE);
 		}
+		
+		private void clearFields() {
+			universityName.setValue(null);
+			universityCountry.setValue(null);
+			universityCity.setValue(null);
+		}
+		
+		
 		
 	}
 	
