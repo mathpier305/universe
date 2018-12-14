@@ -35,6 +35,7 @@ public class ShowAllStudentsLayoutFactory implements UIComponentBuilder{
 			studentsTable = new Grid(container);
 			studentsTable.setColumnOrder("firstName", "lastName", "age", "gender");
 			studentsTable.removeColumn("id");
+			studentsTable.removeColumn("university");
 			studentsTable.setImmediate(true);
 			
 			

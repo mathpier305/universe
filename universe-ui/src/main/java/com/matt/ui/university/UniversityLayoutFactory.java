@@ -19,8 +19,12 @@ public class UniversityLayoutFactory extends VerticalLayout implements View{
 	@Autowired
 	private AddUniversityLayoutFactory addUniversityLayoutFactory;
 	private TabSheet tabSheet;
-
 	
+//	@Autowired
+//	private ShowAllUniversitiesLayoutFactory showUniversitiesLayoutFactory;
+
+	@Autowired
+	private StatisticUniversityLayoutFactory statisticUniversityLayoutFactory;
 	private void addLayout() {
 		setMargin(true);
 		tabSheet = new TabSheet();
@@ -28,7 +32,7 @@ public class UniversityLayoutFactory extends VerticalLayout implements View{
 		
 		Component addUniversityTab = addUniversityLayoutFactory.createComponent();
 		Component showAllUniverisitiesTab = new Label("All Univerisities");
-		Component showStatistic = new Label("Stats");
+		Component showStatistic = statisticUniversityLayoutFactory.createComponent();
 		
 		tabSheet.addTab(addUniversityTab, "ADD UNIVERSITY");
 		tabSheet.addTab(showAllUniverisitiesTab, "Show All UNIVERSITIES");

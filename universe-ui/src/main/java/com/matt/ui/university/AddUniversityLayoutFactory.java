@@ -1,6 +1,9 @@
 package com.matt.ui.university;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import com.matt.model.entity.University;
+import com.matt.service.addUniversityService.AddUniversityService;
 import com.matt.utils.NotificationMessages;
 import com.matt.utils.StudentStringUitls;
 import com.matt.utils.UniversityStringUtils;
@@ -20,6 +23,9 @@ import com.vaadin.ui.themes.ValoTheme;
 @org.springframework.stereotype.Component
 public class AddUniversityLayoutFactory {
 	
+	@Autowired
+	AddUniversityService addUniversityService;
+	
 	private class AddUniversityLayout extends VerticalLayout implements Button.ClickListener {
 		
 		private TextField universityName;
@@ -28,13 +34,16 @@ public class AddUniversityLayoutFactory {
 		private Button saveButton;
 		private University university;
 		private BeanFieldGroup<University> fieldGroup;
+
 		
 		public AddUniversityLayout init() {
+			university = new University();
+			
 			universityName = new TextField(UniversityStringUtils.UNIVERSITY_NAME.getString());
 			universityCountry = new TextField(UniversityStringUtils.UNIVERSITY_COUNTRY.getString());
 			universityCity  = new TextField(UniversityStringUtils.UNIVERSITY_CITY.getString());		
 			
-			saveButton = new Button(StudentStringUitls.SAVE_BUTTON.getString());
+			saveButton = new Button(StudentStringUitls.SAVE_BUTTON.getString(), this);
 			saveButton.setStyleName(ValoTheme.BUTTON_FRIENDLY);
 			
 			universityName.setNullRepresentation("");

@@ -11,7 +11,9 @@ public enum NotificationMessages {
 	STUDENT_SAVE_SUCCESS_DESCRIPTION("Students Has been saved!!"), 
 	STUDENT_REMOVE_SUCCESS_TITLE("REMOVE") ,
 	STUDENT_REMOVE_SUCCESS_DESCRIPTION("student(s) successfully removed"), 
-	STUDENT_REMOVE_BUTTON("Remove");
+	STUDENT_REMOVE_BUTTON("Remove"), 
+	STUDENT_SAVE_INVALID_ERROR_TITLE("Student Save Invalid"), 
+	STUDENT_SAVE_INVALID_ERROR_DESCRIPTION("Student Must enrolled to at least one university");
 	private String string;
 	
 	private NotificationMessages(String string) {

@@ -1,10 +1,14 @@
 package com.matt.ui.students;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.google.gwt.i18n.server.testing.Gender;
 import com.matt.model.entity.Student;
+import com.matt.model.entity.University;
 import com.matt.service.addstudent.AddStudentService;
+import com.matt.service.showUniversityService.ShowAllUniversitiesService;
 import com.matt.utils.NotificationMessages;
 import com.matt.utils.StudentStringUitls;
 import com.vaadin.data.fieldgroup.BeanFieldGroup;
@@ -30,6 +34,7 @@ public class AddStudentMainLayoutFactory {
 		private TextField lastName;
 		private TextField age;
 		private ComboBox gender;
+		private ComboBox university;
 		private Button saveButton;
 		private Button clearButton;
 		
@@ -52,6 +57,8 @@ public class AddStudentMainLayoutFactory {
 			
 			saveButton = new Button(StudentStringUitls.SAVE_BUTTON.getString());
 			clearButton = new Button(StudentStringUitls.CLEAR_BUTTON.getString());
+			university = new ComboBox(StudentStringUitls.UNIVERSITY.getString());
+			university.setWidth("100%");
 			
 			saveButton.addClickListener(this);
 			clearButton.addClickListener(this);
@@ -77,10 +84,22 @@ public class AddStudentMainLayoutFactory {
 			return this;
 		}
 		
+		private boolean isSaveOperationValid() {
+			return showAllUniversitiesService.getAllUniversities().size() != 0;
+		}
+		
+		public AddStudentMainLayout load() {
+			
+			List<University> universities = showAllUniversitiesService.getAllUniversities();
+			university.addItems(universities);
+			
+			return this;
+		}
+		
 		public Component layout() {
 			setMargin(true);
 			
-			GridLayout gridLayout = new GridLayout(2, 3);
+			GridLayout gridLayout = new GridLayout(2, 4);
 			gridLayout.setSpacing(true);
 			gridLayout.addComponent(firstName,0,0);
 			gridLayout.addComponent(lastName,1,0);
@@ -88,7 +107,9 @@ public class AddStudentMainLayoutFactory {
 			gridLayout.addComponent(age, 0, 1);
 			gridLayout.addComponent(gender, 1,1);
 			
-			gridLayout.addComponent(new HorizontalLayout(saveButton, clearButton), 0, 2);
+			gridLayout.addComponent(university, 0, 2,1,2);
+			
+			gridLayout.addComponent(new HorizontalLayout(saveButton, clearButton), 0, 3);
 
 			return gridLayout;
 
@@ -106,6 +127,13 @@ public class AddStudentMainLayoutFactory {
 		}
 		
 		private void save() {
+			if(!isSaveOperationValid()) {
+				Notification.show(NotificationMessages.STUDENT_SAVE_INVALID_ERROR_TITLE.getString(),
+						NotificationMessages.STUDENT_SAVE_INVALID_ERROR_DESCRIPTION.getString(),
+						Type.ERROR_MESSAGE);
+				return;
+			}
+			
 			try {
 				fieldGroup.commit();
 			} catch (CommitException e) {
@@ -121,7 +149,9 @@ public class AddStudentMainLayoutFactory {
 			Notification.show(NotificationMessages.STUDENT_SAVE_SUCCESS_TITLE.getString(),
 					NotificationMessages.STUDENT_SAVE_SUCCESS_DESCRIPTION.getString(),
 					Type.WARNING_MESSAGE);
+			
 		}
+		
 		
 		
 		private void clearField() {
@@ -129,14 +159,18 @@ public class AddStudentMainLayoutFactory {
 			lastName.setValue(null);
 			gender.setValue(null);
 			age.setValue(null);
+			university.setValue(null);
 		}
 	}
+	
+	@Autowired
+	private ShowAllUniversitiesService showAllUniversitiesService;
 	
 	@Autowired
 	private AddStudentService addStudentService;
 	
 	public Component createComponent(StudentSavedListener studentSavedListener) {
-		return new AddStudentMainLayout(studentSavedListener).init().bind().layout();
+		return new AddStudentMainLayout(studentSavedListener).init().load().bind().layout();
 	}
 
 }

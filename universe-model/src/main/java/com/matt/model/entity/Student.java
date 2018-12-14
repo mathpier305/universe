@@ -2,8 +2,11 @@ package com.matt.model.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
@@ -15,7 +18,7 @@ public class Student {
 	
 	@Id
 	@GeneratedValue
-	@Column
+	@Column(name="id")
 	private Integer id;
 	
 	@NotNull(message="You have to specify First Name")
@@ -78,7 +81,22 @@ public class Student {
 	public void setGender(String gender) {
 		this.gender = gender;
 	}
+	
+	
+	
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="university_id")
+	@NotNull(message="university must not be null")
+	private University university;
+	
+	
 
+	public University getUniversity() {
+		return university;
+	}
+	public void setUniversity(University university) {
+		this.university = university;
+	}
 	@Override
 	public String toString() {
 		return this.firstName +"-"+this.lastName+"-"+this.age;
