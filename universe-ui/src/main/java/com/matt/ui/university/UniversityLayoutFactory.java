@@ -12,7 +12,7 @@ import com.vaadin.ui.TabSheet;
 import com.vaadin.ui.VerticalLayout;
 
 @SpringView(name=UniversityLayoutFactory.NAME, ui=UniversMainUI.class)
-public class UniversityLayoutFactory extends VerticalLayout implements View{
+public class UniversityLayoutFactory extends VerticalLayout implements View, UniversitySavedListener{
 
 	public static final String NAME= "operations";
 	
@@ -20,8 +20,8 @@ public class UniversityLayoutFactory extends VerticalLayout implements View{
 	private AddUniversityLayoutFactory addUniversityLayoutFactory;
 	private TabSheet tabSheet;
 	
-//	@Autowired
-//	private ShowAllUniversitiesLayoutFactory showUniversitiesLayoutFactory;
+	@Autowired
+	private ShowUniversitiesLayoutFactory showUniversitiesLayoutFactory;
 
 	@Autowired
 	private StatisticUniversityLayoutFactory statisticUniversityLayoutFactory;
@@ -30,8 +30,8 @@ public class UniversityLayoutFactory extends VerticalLayout implements View{
 		tabSheet = new TabSheet();
 		tabSheet.setWidth("100%");
 		
-		Component addUniversityTab = addUniversityLayoutFactory.createComponent();
-		Component showAllUniverisitiesTab = new Label("All Univerisities");
+		Component addUniversityTab = addUniversityLayoutFactory.createComponent(this);
+		Component showAllUniverisitiesTab = showUniversitiesLayoutFactory.createComponent();
 		Component showStatistic = statisticUniversityLayoutFactory.createComponent();
 		
 		tabSheet.addTab(addUniversityTab, "ADD UNIVERSITY");
@@ -41,6 +41,11 @@ public class UniversityLayoutFactory extends VerticalLayout implements View{
 		addComponent(tabSheet);
 	
 		
+	}
+	
+	public void universitySaved() {
+		showUniversitiesLayoutFactory.refreshTable();
+		statisticUniversityLayoutFactory.refresh();
 	}
 
 	public void enter(ViewChangeEvent event) {

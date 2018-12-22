@@ -34,7 +34,11 @@ public class AddUniversityLayoutFactory {
 		private Button saveButton;
 		private University university;
 		private BeanFieldGroup<University> fieldGroup;
+		private UniversitySavedListener universitySavedListener;
 
+		public AddUniversityLayout(UniversitySavedListener universitySavedListener) {
+			this.universitySavedListener = universitySavedListener;
+		}
 		
 		public AddUniversityLayout init() {
 			university = new University();
@@ -87,6 +91,7 @@ public class AddUniversityLayoutFactory {
 			}
 			clearFields();
 			addUniversityService.addUniversity(university);
+			universitySavedListener.universitySaved();
 			Notification.show("SAVE", "university saved successfully", Type.WARNING_MESSAGE);
 		}
 		
@@ -95,13 +100,10 @@ public class AddUniversityLayoutFactory {
 			universityCountry.setValue(null);
 			universityCity.setValue(null);
 		}
-		
-		
-		
 	}
 	
-	public Component createComponent() {
-		return new AddUniversityLayout().init().bind().layout();
+	public Component createComponent(UniversitySavedListener universitySavedListener) {
+		return new AddUniversityLayout(universitySavedListener).init().bind().layout();
 	}
 
 }
