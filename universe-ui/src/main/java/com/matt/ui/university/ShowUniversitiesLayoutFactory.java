@@ -12,6 +12,7 @@ import com.vaadin.ui.Component;
 import com.vaadin.ui.Grid;
 import com.vaadin.ui.VerticalLayout;
 
+@org.springframework.stereotype.Component
 public class ShowUniversitiesLayoutFactory implements UIComponentBuilder {
 	
 	private List<University> universities;
@@ -20,8 +21,6 @@ public class ShowUniversitiesLayoutFactory implements UIComponentBuilder {
 	@Autowired
 	private ShowAllUniversitiesService showAllUniversitiesService;
 	
-	
-	
 	private class ShowUniversityLayout extends VerticalLayout {
 		private  Grid universityTable;
 		
@@ -29,22 +28,33 @@ public class ShowUniversitiesLayoutFactory implements UIComponentBuilder {
 			setMargin(true);
 			
 			container = new BeanItemContainer<University>(University.class, universities);
+			
 			universityTable = new Grid(container);
-			universityTable.setColumnOrder("UniversityName", "UniversityCountry", "UniversityCity");
+			universityTable.setColumnOrder("universityName", "universityCountry", "universityCity");
 			universityTable.removeColumn("id");
 			universityTable.setImmediate(true);
+			
+			return this;
+		}
+		
+		public ShowUniversityLayout layout() {
+			addComponent(universityTable);
+			return this;
+		}
+		
+		public ShowUniversityLayout load() {
+			universities = showAllUniversitiesService.getAllUniversities();
 			return this;
 		}
 	}
+	
+	public void refreshTable() {
+		universities = showAllUniversitiesService.getAllUniversities();
+		container.removeAllItems();
+		container.addAll(universities);
+	}
 
 	public Component createComponent() {
-		// TODO Auto-generated method stub
-		return null;
+		return new ShowUniversityLayout().init().load().layout();
 	}
-
-	public void refreshTable() {
-		// TODO Auto-generated method stub
-		
-	}
-
 }

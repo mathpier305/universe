@@ -8,6 +8,7 @@ import com.matt.model.entity.University;
 import com.matt.service.showUniversityService.ShowAllUniversitiesService;
 import com.matt.service.universityStatisticService.UniversityStatisticService;
 import com.matt.ui.commonns.UIComponentBuilder;
+import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
@@ -17,11 +18,13 @@ public class StatisticUniversityLayoutFactory  implements UIComponentBuilder {
 	
 	private List<University> universities;
 	
-	@Autowired
-	private ShowAllUniversitiesService showAllUniversitiesService;
-
+	private StatisticsUniversityLayout statisticsLayout;
+	
 	@Autowired
 	private UniversityStatisticService universityStatisticService;
+	
+	@Autowired
+	private ShowAllUniversitiesService showAllUniversitiesService;
 	
 	
 	private class StatisticsUniversityLayout extends VerticalLayout {
@@ -31,12 +34,11 @@ public class StatisticUniversityLayoutFactory  implements UIComponentBuilder {
 			return this;
 		}
 		
-		public StatisticsUniversityLayout layout() {
-			
+		public StatisticsUniversityLayout layout() {	
 			setMargin(true);
 			for(University university : universities) {
 				int numOfStudents = universityStatisticService.getNumOfStudentsForUniversity(university.getId());
-				Label label = new Label("<p><b>"+university.getUniversityName()+"</b>"+numOfStudents+" Students </p>");
+				Label label = new Label("<p><b>"+university.getUniversityName()+"</b>"+" - "+numOfStudents+" Students "+"</p>",  ContentMode.HTML);
 				addComponent(label);
 				
 			}
@@ -44,11 +46,17 @@ public class StatisticUniversityLayoutFactory  implements UIComponentBuilder {
 		}
 		
 	}
-	public Component createComponent() {
-		
-		return new StatisticsUniversityLayout().load().layout();
-	}
+	
 	public void refresh() {
+		if(statisticsLayout == null) return;
+		statisticsLayout.removeAllComponents();
+		statisticsLayout.load();
+		statisticsLayout.layout();
 	}
-
+	
+	
+	public Component createComponent() {	
+		statisticsLayout = new StatisticsUniversityLayout();
+		return statisticsLayout.load().layout();
+	}
 }

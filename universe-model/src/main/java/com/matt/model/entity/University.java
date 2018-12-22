@@ -8,14 +8,14 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 @Entity
-@Table(name="University")
+@Table(name="UNIVERSITY")
 public class University {
 	
 	@Id
 	@GeneratedValue
 	@Column(name="id")
 	private Integer id;
-	
+
 	public Integer getId() {
 		return id;
 	}
