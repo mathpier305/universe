@@ -12,7 +12,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 
 @Configuration
 @EnableAutoConfiguration
-@EnableWebSecurity
 @ComponentScan({"com.matt"})
 @EnableJpaRepositories({"com.matt"})
 @EntityScan(("com.matt"))
@@ -22,7 +21,6 @@ public class SpringBootApplication extends SpringBootServletInitializer{
 	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
 		return application.sources(SpringBootApplication.class);
 	}
-	
 	public static void main(String [] args) {
 		SpringApplication.run(SpringBootApplication.class, args);
 	}
